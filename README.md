@@ -56,23 +56,6 @@ MERN-Notes/
 
 ---
 
-## ⚙️ Environment Variables
-
-### 🔹 Frontend (`client/.env`)
-
-```
-VITE_API_BASE_URL=https://your-backend-url.onrender.com/api
-```
-
-### 🔹 Backend (`server/.env`)
-
-```
-PORT=5001
-MONGO_URI=your_mongodb_connection_string
-```
-
----
-
 ## 🚀 Installation & Setup
 
 ### 1️⃣ Clone the repository
