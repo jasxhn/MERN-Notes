@@ -1,11 +1,15 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
 export const connectDB = async () => {
-    try {
-        mongoose.connect(process.env.MONGO_URI);
-        console.log("Mongodb connected successfully")
-    } catch (error) {
-        console.error("Error connecting to mongoDB", error);
-        process.exit(1); // exited with failure
+  try {
+    if (!process.env.MONGO_URI) {
+      throw new Error("MONGO_URI is not set");
     }
-}
+
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log("Mongodb connected successfully");
+  } catch (error) {
+    console.error("Error connecting to mongoDB", error);
+    process.exit(1);
+  }
+};

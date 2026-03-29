@@ -5,35 +5,39 @@ import dotenv from "dotenv";
 import rateLimiter from "./src/middleware/rateLimiter.js";
 import who from "./src/middleware/who.js";
 import cors from "cors";
-import path from "path"
+import path from "path";
+import { fileURLToPath } from "url";
+import authRoutes from "./src/routes/authRoutes.js";
 
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5001
-const __dirname = path.resolve()
+const PORT = process.env.PORT || 5001;
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:5173";
 
-if(process.env.NODE_ENV !== "production") {
+if (process.env.NODE_ENV !== "production") {
   app.use(cors({
-  origin: "http://localhost:5173",
-}));
+    origin: CLIENT_URL,
+  }));
 }
 
-//middleware
-app.use(express.json()); //first - very important middleware for req.body
+app.use(express.json());
 
-app.use(rateLimiter)
-app.use(who)
+app.use(rateLimiter);
+app.use(who);
 
+app.use("/api/notes", notesRoutes);
+app.use("/api/auth", authRoutes);
 
-app.use("/api/notes", notesRoutes); //comes second
-
-if(process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../client/dist")))
+if (process.env.NODE_ENV === "production") {
+  const clientDistPath = path.resolve(__dirname, "../client/dist");
+  app.use(express.static(clientDistPath));
 
   app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client", "dist", "index.html"))
-})
+    res.sendFile(path.join(clientDistPath, "index.html"));
+  });
 }
 
 connectDB()

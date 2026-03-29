@@ -4,19 +4,21 @@ import {
     deleteNote, 
     getAllNotes, 
     updateNote,
-    getNotebyId   
+    getNotebyId,
 } from "../controllers/notesController.js";
+
+import protect from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-router.get("/", getAllNotes);
+router.get("/", protect, getAllNotes);
 
-router.get("/:id", getNotebyId);
+router.get("/:id", protect, getNotebyId);
 
-router.post("/", createANote);
+router.post("/", protect, createANote);
 
-router.put("/:id", updateNote);
+router.put("/:id", protect, updateNote);
 
-router.delete("/:id", deleteNote);
+router.delete("/:id", protect, deleteNote);
 
 export default router;
