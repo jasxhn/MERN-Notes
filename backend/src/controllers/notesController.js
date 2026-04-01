@@ -16,7 +16,6 @@ export async function getNotebyId(req, res) {
 
         if (!note) return res.status(404).json({ message: "Note not found!" });
 
-        // 🔒 check ownership
         if (note.user.toString() !== req.user._id.toString()) {
             return res.status(401).json({ message: "Not authorized" });
         }
@@ -35,7 +34,7 @@ export async function createANote(req, res) {
         const note = await Note.create({
             title,
             content,
-            user: req.user._id, // 🔥 KEY LINE
+            user: req.user._id,
         });
 
         res.status(201).json(note);
