@@ -8,8 +8,6 @@ A full-stack Notes application built using the MERN stack (**MongoDB, Express.js
 
 👉 [https://mern-notesapp-ym8r.onrender.com/](https://mern-notesapp-ym8r.onrender.com/)
 
-> ⚠️ **Note:** The site may take up to a minute to load initially due to Render's free tier sleeping behavior.
-
 ## 📦 Repository
 
 👉 [https://github.com/jasxhn/MERN-Notes](https://github.com/jasxhn/MERN-Notes)
